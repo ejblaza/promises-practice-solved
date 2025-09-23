@@ -3,17 +3,17 @@
  * Please, make sure to read the "09 An-important-rule.md" file in exercises-info folder
  */
 
-
 /**
  * @task
- * Create a function `iterate` that prints the first function argument 
+ * Create a function `iterate` that prints the first function argument
  * (an integer) to it and then returns that argument + 1
  * The function must be exported
  */
 
 export function iterate(arg) {
   // Your code goes here...
-  
+  console.log(arg);
+  return isNaN(parseInt(arg)) ? undefined : parseInt(arg) + 1;
 }
 
 /**
@@ -25,20 +25,23 @@ export function iterate(arg) {
 export function alwaysThrows() {
   // Your code goes here...
 
+  // The test for this function is outputting "null" but when outputting the promise, the error shows with the "Error" object with its message
+  return Error("OH NOES");
 }
 
 /**
  * @task
- * Create a function `onReject` that 
+ * Create a function `onReject` that
  * * Takes an argument that can be either error object or a string value
  * * Logs the error object message property value in the console if the argument is an object
  * * Logs the argument value in the console in any other case
  * The function must be exported
  */
 
-export function onReject() {
+export function onReject(arg) {
   // Your code goes here...
-
+  if (typeof arg === "object") return console.log(arg.message);
+  else return console.log(arg);
 }
 
 /**
@@ -63,10 +66,19 @@ export function onReject() {
  */
 
 // Your code goes here...
-export const promise;
-
-
-
+export const promise = Promise.resolve(1)
+  .then((data) => iterate(data))
+  .then((data) => iterate(data))
+  .then((data) => iterate(data))
+  .then((data) => iterate(data))
+  .then((data) => iterate(data))
+  .then(() => alwaysThrows())
+  .then((data) => iterate(data))
+  .then((data) => iterate(data))
+  .then((data) => iterate(data))
+  .then((data) => iterate(data))
+  .then((data) => iterate(data))
+  .catch((err) => onReject(err));
 // === TEST YOURSELF ===
 // Once you're finished run the test with "npm run test-9"
 // If the test has all tests passed, switch to the next exercise file

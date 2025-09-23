@@ -1,17 +1,34 @@
+/* eslint-disable no-unused-vars */
 export const getFirstResolvedPromise = (promises) => {
   //*  write code to pass test ⬇ ️
+  return Promise.any(promises);
 };
 
 export const getFirstPromiseOrFail = (promises) => {
   //*  write code to pass test ⬇ ️
+  return Promise.race(promises);
 };
 
 export const getQuantityOfRejectedPromises = (promises) => {
   //*  write code to pass test ⬇ ️
+  let count = 0;
+
+  return Promise.allSettled(promises)
+    .then((rej) =>
+      rej.forEach((pro) => (pro.reason === "rejected" ? count++ : count))
+    )
+    .then(() => count);
 };
 
 export const getQuantityOfFulfilledPromises = (promises) => {
   //*  write code to pass test ⬇ ️
+  let count = 0;
+
+  return Promise.allSettled(promises)
+    .then((res) =>
+      res.forEach((pro) => (pro.status === "fulfilled" ? count++ : count))
+    )
+    .then(() => count);
 };
 
 //!  ⬇ ⬇ ⬇ ⬇ Don't Edit This Array ⬇ ⬇ ⬇ ⬇
@@ -45,4 +62,13 @@ export const fetchAllCharactersByIds = async (ids) => {
   // To solve this you must fetch all characters passed in the array at the same time
   // use the `fetchCharacterById` function above to make this work
   //*  write code to pass test ⬇ ️
+
+  if (ids.length <= allCharacters.length) {
+    const newArray = [];
+    for (let id of ids) {
+      newArray.push(fetchCharacterById(id));
+    }
+    const result = await Promise.all(newArray);
+    return result;
+  } else return [];
 };
