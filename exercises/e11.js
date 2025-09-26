@@ -13,8 +13,6 @@
  * * set the usersUrl constant to store the json-server 'users' endpoint path
  */
 
-import fetch from "node-fetch";
-
 export const usersUrl = "http://localhost:3000/users/";
 
 /**
@@ -33,6 +31,13 @@ const getLoginList = (data) => {
   const logins = data.map((log) => log.login);
   console.log(logins);
   return logins;
+
+  // return data.map((user) => user.login); //
+  // Attempted to reduce the function to put the console.log in the result portion as suggested
+  // with the single line of code above which is similar to the code above that
+  // single line code, but the data being logged is all the data for each user.
+  // How can that be when it is refactored to a single line of code?
+  // It's as if the console.log in this function can takes the mapped data but not the return command.
 };
 
 /**
@@ -57,9 +62,10 @@ const getData = fetch(usersUrl);
  */
 
 // Your code goes here ...
-export const result = getData
-  .then((data) => data.json())
-  .then((data) => getLoginList(data));
+export const result = getData.then((data) => data.json()).then(getLoginList);
+
+// .then(console.log(getLoginList)) //
+//  Used this .then syntax to try to log the function and return the data with the single return code as mentioned earlier
 
 // === TEST YOURSELF ===
 // Once you're finished run the test with "npm run test-11"

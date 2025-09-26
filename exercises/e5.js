@@ -27,7 +27,7 @@ export const getPromise = () => {
     res("MANHATTAN");
   });
 
-  return promise.then((data) => console.log(attachTitle(data)));
+  return promise.then(attachTitle).then(console.log);
 };
 
 // === TEST YOURSELF ===

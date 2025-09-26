@@ -13,11 +13,9 @@ export const getQuantityOfRejectedPromises = (promises) => {
   //*  write code to pass test ⬇ ️
   let count = 0;
 
-  return Promise.allSettled(promises)
-    .then((rej) =>
-      rej.forEach((pro) => (pro.reason === "rejected" ? count++ : count))
-    )
-    .then(() => count);
+  return Promise.allSettled(promises).then(
+    (arrResults) => arrResults.filter((pro) => pro.reason === "rejected").length
+  );
 };
 
 export const getQuantityOfFulfilledPromises = (promises) => {
@@ -63,12 +61,6 @@ export const fetchAllCharactersByIds = async (ids) => {
   // use the `fetchCharacterById` function above to make this work
   //*  write code to pass test ⬇ ️
 
-  if (ids.length <= allCharacters.length) {
-    const newArray = [];
-    for (let id of ids) {
-      newArray.push(fetchCharacterById(id));
-    }
-    const result = await Promise.all(newArray);
-    return result;
-  } else return [];
+  const newArray = ids.map((id) => fetchCharacterById(id));
+  return await Promise.all(newArray).catch(() => []);
 };

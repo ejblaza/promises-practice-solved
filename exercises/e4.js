@@ -22,7 +22,7 @@ const second = (val) => {
 
 // Refactor the following code...
 export const handlePromise = first()
-  .then((val) => second(val))
+  .then(second)
   .then((val) => {
     second(val);
     return val;

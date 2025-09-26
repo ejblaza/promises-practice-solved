@@ -21,13 +21,14 @@
 
 export function parsePromised(json) {
   // Your code goes here...
-  try {
-    return new Promise((res) => {
+
+  return new Promise((res, rej) => {
+    try {
       res(JSON.parse(json));
-    });
-  } catch (error) {
-    console.log(error.message);
-  }
+    } catch (error) {
+      rej(error);
+    }
+  });
 }
 
 /**
@@ -58,11 +59,7 @@ export const handlePromise = (promise) => {
   // Your code goes here...
   return promise
     .then((data) => data)
-    .catch((err) => {
-      if (err.message) {
-        return onReject(err);
-      } else return err;
-    });
+    .catch((err) => (err.message ? onReject(err) : err));
 };
 
 // === TEST YOURSELF ===

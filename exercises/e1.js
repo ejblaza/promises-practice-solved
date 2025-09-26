@@ -17,10 +17,7 @@ export const createOneSecondPromise = () => {
 export const logMessageAfterOneSecond = (message) => {
   // use the 'createOneSecondPromise' function, and a `onFulfilled` callback with a `.then` method
   // to log the `message` parameter we pass in after one second
-  return createOneSecondPromise().then(
-    setTimeout(() => console.log(message)),
-    1000
-  );
+  return createOneSecondPromise().then(() => console.log(message));
 };
 
 export const logMessageAfterOneSecondAwait = async (message) => {
@@ -28,9 +25,8 @@ export const logMessageAfterOneSecondAwait = async (message) => {
   // to create a function that logs a message after one second
   // in an async function it automatically returns a promise no matter what you return, so you don't need to
   // worry about what you return
-  return await logMessageAfterOneSecond(message);
+  await createOneSecondPromise().then(logMessageAfterOneSecond(message));
 };
-
 // === TEST YOURSELF ===
 // Once you're finished run the test with "npm run test-1"
 // If the test has all tests passed, switch to the next exercise file
